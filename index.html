@@ -1,0 +1,806 @@
+<!doctype html>
+<!--
+  MADE BY KIRAT / Standalone creative-studio website
+  All CSS, JavaScript, icons and illustrations are included in this file.
+  No build step, external libraries, fonts, analytics or image requests.
+  EDIT: search for "CONTENT CONFIG" below and the clearly labelled HTML sections.
+  Portfolio studies are fictional concepts, NOT claims of real client work.
+  Contact prepares an email draft; it does NOT send or store submissions.
+-->
+<html lang="en" data-theme="dark" data-motion="on">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Made by Kirat is an independent creative studio for brand identity, graphic design, social media, marketing, motion and digital experiences.">
+  <meta name="theme-color" content="#0c100f">
+  <meta name="color-scheme" content="dark light">
+  <meta property="og:title" content="Made by Kirat - Small ideas. Big brands.">
+  <meta property="og:description" content="An independent creative studio bringing strategy and visual craft together. Branding, design, marketing, motion and digital.">
+  <meta property="og:type" content="website">
+  <title>Made by Kirat - Independent Creative Studio</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230c100f'/%3E%3Cpath d='M32 12v40M12 32h40M18 18l28 28M18 46l28-28' stroke='%23b5f6cc' stroke-width='5'/%3E%3C/svg%3E">
+  <script>
+    /* Read preferences early to avoid a theme flash. Storage is optional. */
+    (() => {
+      const root = document.documentElement;
+      try {
+        const theme = localStorage.getItem('mbk-theme');
+        if (theme === 'light' || theme === 'dark') root.dataset.theme = theme;
+        const savedMotion = localStorage.getItem('mbk-motion');
+        if (savedMotion === 'off' || matchMedia('(prefers-reduced-motion: reduce)').matches) root.dataset.motion = 'off';
+      } catch (_) {
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches) root.dataset.motion = 'off';
+      }
+    })();
+  </script>
+  <style>
+    /* ==================== DESIGN TOKENS / THEMES ==================== */
+    :root {
+      --bg:#0c100f; --surface:#121815; --surface-2:#18211c; --fg:#f2f2e9;
+      --muted:#a6aea7; --quiet:#8c988f; --accent:#b5f6cc; --accent-ink:#102a1b;
+      --line:rgba(211,233,216,.13); --line-hover:rgba(181,246,204,.43);
+      --header:rgba(12,16,15,.86); --glow:rgba(101,202,139,.09);
+      --shadow:0 20px 65px -25px rgba(0,0,0,.65); --small-shadow:0 8px 22px rgba(0,0,0,.17);
+      --font:Arial,Helvetica,sans-serif; --mono:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;
+      --ease:cubic-bezier(.22,1,.36,1); --max:1248px; --radius:20px;
+      color-scheme:dark;
+    }
+    :root[data-theme="light"] {
+      --bg:#f3f4ed; --surface:#fafbf5; --surface-2:#e7ece1; --fg:#19261e;
+      --muted:#536157; --quiet:#637266; --accent:#216742; --accent-ink:#102a1b;
+      --line:rgba(25,51,32,.15); --line-hover:rgba(33,103,66,.45);
+      --header:rgba(243,244,237,.88); --glow:rgba(84,158,93,.10);
+      --shadow:0 22px 62px -30px rgba(41,63,40,.3); --small-shadow:0 8px 22px rgba(41,63,40,.08);
+      color-scheme:light;
+    }
+    /* ==================== BASE ==================== */
+    *,*::before,*::after { box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:108px; }
+    body { margin:0; font-family:var(--font); background:var(--bg); color:var(--fg); line-height:1.6; -webkit-font-smoothing:antialiased; transition:background-color .3s,color .3s; }
+    body.dialog-open { overflow:hidden; }
+    button,input,textarea,select { font:inherit; }
+    button,a,input,textarea,select { -webkit-tap-highlight-color:transparent; }
+    button { cursor:pointer; }
+    a { color:inherit; text-decoration:none; }
+    button { color:inherit; }
+    img,svg { display:block; max-width:100%; }
+    h1,h2,h3,p { margin:0; }
+    ::selection { color:#0c2416; background:#b5f6cc; }
+    :focus-visible { outline:3px solid var(--accent); outline-offset:5px; }
+    [hidden] { display:none!important; }
+    .container { width:min(var(--max),calc(100% - 96px)); margin-inline:auto; }
+    .icon { width:20px; height:20px; flex-shrink:0; }
+    .mono { font-family:var(--mono); font-size:10px; font-weight:400; letter-spacing:.13em; text-transform:uppercase; }
+    .muted { color:var(--muted); }
+    .accent { color:var(--accent); }
+    .sr-only { position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    .skip-link { position:fixed; z-index:100; left:24px; top:-100px; border-radius:8px; padding:12px 20px; background:var(--accent); color:var(--accent-ink); }
+    .skip-link:focus { top:16px; }
+    .btn { min-height:52px; display:inline-flex; justify-content:center; align-items:center; gap:28px; padding:13px 23px; border-radius:99px; border:1px solid var(--line); background:transparent; font-size:13px; font-weight:600; line-height:1.4; transition:transform .3s var(--ease),box-shadow .3s,background-color .3s,border-color .3s; }
+    .btn:hover { transform:translateY(-3px); border-color:var(--line-hover); box-shadow:var(--small-shadow); }
+    .btn .icon { width:18px; height:18px; transition:transform .3s var(--ease); }
+    .btn:hover .icon { transform:translateX(3px); }
+    .btn-primary { background:#b5f6cc; color:#14281b; border-color:#b5f6cc; box-shadow:0 7px 30px -16px rgba(181,246,204,.8); }
+    .btn-primary:hover { background:#caffdc; border-color:#caffdc; box-shadow:0 10px 35px -16px rgba(181,246,204,.75); }
+    .icon-btn { display:inline-flex; justify-content:center; align-items:center; width:44px; height:44px; flex-shrink:0; background:transparent; border:1px solid var(--line); border-radius:50%; transition:background .2s,border-color .2s; }
+    .icon-btn:hover { border-color:var(--line-hover); background:var(--surface-2); }
+    .text-link { display:inline-flex; align-items:center; gap:12px; padding:9px 0; border-bottom:1px solid var(--line); font-size:13px; font-weight:600; }
+    .text-link:hover { color:var(--accent); border-color:var(--accent); }
+    .section { padding:110px 0; border-top:1px solid var(--line); }
+    .eyebrow { display:flex; align-items:center; gap:16px; color:var(--accent); font-family:var(--mono); font-size:10px; line-height:1.6; letter-spacing:.17em; text-transform:uppercase; }
+    .eyebrow .number { color:var(--quiet); }
+    .eyebrow::after { content:""; width:46px; height:1px; background:var(--line-hover); }
+    .section-title { font-size:clamp(38px,4.5vw,62px); font-weight:500; letter-spacing:-.06em; line-height:1.07; }
+    .section-title .soft { color:var(--muted); }
+    .section-head { display:flex; justify-content:space-between; align-items:flex-end; gap:50px; margin:24px 0 42px; }
+    .section-head p { max-width:330px; color:var(--muted); font-size:14px; }
+    /* ==================== NAVIGATION ==================== */
+    .site-header { position:sticky; top:0; z-index:30; background:var(--header); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); border-bottom:1px solid var(--line); }
+    .nav { min-height:86px; display:flex; justify-content:space-between; align-items:center; gap:28px; }
+    .brand { display:inline-flex; align-items:center; gap:10px; font-size:19px; font-weight:600; letter-spacing:-.7px; white-space:nowrap; }
+    .brand-mark { color:var(--accent); width:29px; height:29px; flex-shrink:0; }
+    .nav-links { display:flex; gap:30px; align-items:center; }
+    .nav-links a { position:relative; padding:15px 0; color:var(--muted); font-size:12px; transition:color .2s; }
+    .nav-links a:hover,.nav-links a[aria-current="location"] { color:var(--fg); }
+    .nav-links a::after { content:""; position:absolute; bottom:6px; left:0; width:100%; height:1px; background:var(--accent); transform:scaleX(0); transform-origin:left; transition:transform .3s var(--ease); }
+    .nav-links a:hover::after,.nav-links a[aria-current="location"]::after { transform:scaleX(1); }
+    .nav-actions { display:flex; align-items:center; gap:12px; }
+    .nav-cta { min-height:44px; font-size:12px; padding:10px 20px; gap:18px; }
+    .theme-toggle { display:flex; align-items:center; gap:9px; padding:0 14px; min-height:44px; border-radius:99px; background:var(--surface); border:1px solid var(--line); font-size:11px; }
+    .theme-toggle .icon { width:16px; height:16px; }
+    .theme-toggle:hover { border-color:var(--line-hover); }
+    [data-theme="dark"] .moon-icon,[data-theme="light"] .sun-icon { display:none; }
+    .menu-toggle { display:none; }
+    .scroll-progress { position:absolute; left:0; bottom:-1px; height:2px; width:100%; background:var(--accent); transform:scaleX(0); transform-origin:left; opacity:.65; }
+    /* ==================== HERO ==================== */
+    .hero { position:relative; padding-top:68px; overflow:hidden; }
+    .hero-grid { display:grid; grid-template-columns:1.07fr 1fr; align-items:center; gap:20px; min-height:620px; }
+    .hero-copy { padding:24px 0 46px; position:relative; z-index:2; }
+    .hero-kicker { display:flex; gap:10px; align-items:center; margin-bottom:31px; color:var(--muted); font-family:var(--mono); font-size:10px; letter-spacing:.17em; text-transform:uppercase; }
+    .status-dot { display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 5px var(--glow); flex-shrink:0; }
+    .hero h1 { font-size:clamp(64px,7.2vw,104px); line-height:1.00; font-weight:500; letter-spacing:-.074em; }
+    .hero h1 span { display:block; color:var(--accent); }
+    .hero-description { max-width:365px; margin-top:28px; font-size:16px; line-height:1.8; color:var(--muted); }
+    .hero-actions { display:flex; gap:13px; margin-top:29px; flex-wrap:wrap; }
+    .hero-footnote { display:flex; gap:12px; align-items:center; margin-top:38px; color:var(--quiet); font-size:11px; }
+    .hero-footnote svg { width:30px; height:30px; color:var(--accent); }
+    .hero-footnote span { max-width:220px; line-height:1.5; }
+    .hero-visual { min-width:0; width:100%; aspect-ratio:1/1; position:relative; isolation:isolate; }
+    .hero-visual::before { content:""; position:absolute; inset:9% -3% 3%; border-radius:50%; background:radial-gradient(ellipse,var(--glow),transparent 68%); }
+    .visual-grid { position:absolute; inset:3%; border-radius:50%; background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px); background-size:48px 48px; opacity:.22; mask-image:radial-gradient(circle,#000,transparent 67%); -webkit-mask-image:radial-gradient(circle,#000,transparent 67%); }
+    .orbit { position:absolute; left:9%; top:11%; width:83%; height:76%; border:1px solid var(--line); border-radius:50%; transform:rotate(-27deg); }
+    .orbit::before { content:""; position:absolute; width:6px; height:6px; border-radius:50%; background:var(--accent); left:12%; top:12%; box-shadow:0 0 20px var(--accent); }
+    .orbit-two { left:1%; top:32%; width:98%; height:30%; transform:rotate(-32deg); opacity:.65; }
+    .orbit-two::before { width:4px; height:4px; left:90%; top:18%; }
+    .sculpture { width:105%; max-width:none; position:absolute; left:-3%; top:-3%; transform-origin:50% 50%; animation:sculpture-float 10s ease-in-out infinite; }
+    @keyframes sculpture-float { 0%,100% { transform:translateY(0) rotate(-4deg); } 50% { transform:translateY(-16px) rotate(6deg); } }
+    .visual-corner { position:absolute; top:4%; left:6%; font-family:var(--mono); color:var(--quiet); font-size:9px; letter-spacing:.15em; line-height:1.8; }
+    .visual-corner::before { content:"+"; display:block; color:var(--accent); font-size:20px; line-height:1.5; }
+    .visual-caption { position:absolute; right:1%; top:8%; text-align:right; font-family:var(--mono); color:var(--quiet); font-size:9px; letter-spacing:.15em; line-height:1.9; }
+    .float-card { position:absolute; z-index:2; bottom:7%; right:0; width:221px; padding:21px; border:1px solid var(--line-hover); border-radius:15px; background:var(--header); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.04); transform:rotate(5deg); animation:card-float 8s ease-in-out infinite; }
+    @keyframes card-float { 0%,100% { transform:translateY(0) rotate(5deg); } 50% { transform:translateY(10px) rotate(2deg); } }
+    .float-card-top { display:flex; align-items:center; justify-content:space-between; gap:10px; color:var(--muted); font-family:var(--mono); font-size:8px; letter-spacing:.11em; text-transform:uppercase; }
+    .float-card-top .brand-mark { width:18px; height:18px; }
+    .float-card p { font-size:25px; font-weight:500; line-height:1.1; letter-spacing:-.05em; margin:22px 0; }
+    .float-card-bottom { display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--line); padding-top:12px; }
+    .swatches { display:flex; }
+    .swatches span { width:16px; height:16px; border-radius:50%; background:#b5f6cc; border:1px solid rgba(255,255,255,.14); }
+    .swatches span:nth-child(2) { background:#5b8768; margin-left:-3px; }
+    .swatches span:nth-child(3) { background:#eae9dc; margin-left:-3px; }
+    .float-card-bottom .mono { font-size:8px; color:var(--quiet); }
+    .floating-tag { position:absolute; bottom:12%; left:3%; display:flex; align-items:center; gap:10px; font-family:var(--mono); font-size:8px; letter-spacing:.14em; color:var(--muted); text-transform:uppercase; transform:rotate(-5deg); }
+    .floating-tag .icon { width:34px; height:34px; padding:8px; border:1px solid var(--line); border-radius:50%; color:var(--accent); }
+    .hero-bottom { display:flex; align-items:center; justify-content:space-between; min-height:81px; padding:22px 0; gap:25px; border-top:1px solid var(--line); color:var(--quiet); }
+    .hero-bottom .mono { font-size:9px; }
+    .hero-bottom a { display:flex; gap:12px; align-items:center; color:var(--muted); font-size:11px; }
+    .hero-bottom a .icon { width:15px; height:15px; transform:rotate(90deg); }
+    .discipline-row { display:flex; align-items:center; gap:23px; }
+    .discipline-row .brand-mark { width:13px; height:13px; }
+    /* ==================== SERVICES ==================== */
+    .services-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:15px; }
+    .service-card { display:flex; flex-direction:column; position:relative; overflow:hidden; padding:28px 27px 22px; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); transition:transform .35s var(--ease),box-shadow .35s,border-color .35s; }
+    .service-card::before { content:""; position:absolute; inset:0; opacity:0; pointer-events:none; background:radial-gradient(350px circle at var(--mx,50%) var(--my,50%),var(--glow),transparent 75%); transition:opacity .35s; }
+    .service-card:hover { transform:translateY(-5px); border-color:var(--line-hover); box-shadow:var(--shadow); }
+    .service-card:hover::before { opacity:1; }
+    .service-card>* { position:relative; }
+    .service-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:32px; }
+    .service-icon { width:32px; height:32px; color:var(--accent); }
+    .service-number { color:var(--quiet); font-size:9px; }
+    .service-card h3 { margin-bottom:9px; font-size:21px; font-weight:500; letter-spacing:-.04em; }
+    .service-card p { color:var(--muted); font-size:13px; line-height:1.75; min-height:69px; max-width:300px; }
+    .service-tags { display:flex; flex-direction:column; gap:6px; margin-top:23px; padding-bottom:22px; font-size:11px; color:var(--quiet); }
+    .service-tags span::before { content:"+"; color:var(--accent); margin-right:9px; }
+    .service-link { margin-top:auto; display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--line); padding-top:17px; font-size:11px; color:var(--muted); }
+    .service-link .icon { width:16px; height:16px; transition:transform .25s; }
+    .service-link:hover { color:var(--accent); }
+    .service-link:hover .icon { transform:translate(2px,-2px); }
+    /* ==================== SELECTED WORK ==================== */
+    .work-section { background:linear-gradient(var(--glow),transparent 180px); }
+    .work-section .section-head { margin-bottom:26px; }
+    .work-toolbar { display:flex; align-items:center; justify-content:space-between; gap:24px; margin-bottom:30px; }
+    .work-notice { max-width:520px; color:var(--quiet); font-size:11px; }
+    .filters { display:flex; flex-shrink:0; padding:4px; background:var(--surface); border:1px solid var(--line); border-radius:99px; }
+    .filter { border:0; background:transparent; min-height:38px; padding:7px 17px; color:var(--muted); font-size:11px; border-radius:99px; transition:background .2s,color .2s; }
+    .filter[aria-pressed="true"] { background:var(--fg); color:var(--bg); }
+    .work-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; }
+    .project-button { display:block; width:100%; padding:0; text-align:left; border:0; background:transparent; border-radius:var(--radius); }
+    .work-art { display:block; position:relative; overflow:hidden; border-radius:var(--radius); isolation:isolate; box-shadow:var(--small-shadow); }
+    .work-art>svg { width:100%; height:auto; transition:transform .7s var(--ease); }
+    .project-button:hover .work-art>svg { transform:scale(1.045); }
+    .concept-label { position:absolute; top:15px; right:15px; border:1px solid rgba(255,255,255,.22); background:rgba(15,24,18,.68); backdrop-filter:blur(10px); color:#f5f6ed; font-family:var(--mono); font-size:7px; text-transform:uppercase; letter-spacing:.1em; padding:5px 9px; border-radius:99px; }
+    .project-open { position:absolute; bottom:15px; right:15px; width:40px; height:40px; background:#f5f6ed; color:#17291c; border-radius:50%; display:grid; place-items:center; transform:translateY(65px); transition:transform .4s var(--ease); box-shadow:0 5px 25px rgba(0,0,0,.15); }
+    .project-button:hover .project-open,.project-button:focus-visible .project-open { transform:translateY(0); }
+    .work-heading { display:flex; align-items:center; justify-content:space-between; gap:15px; margin-top:20px; }
+    .work-name { font-size:22px; font-weight:500; letter-spacing:-.05em; }
+    .work-category { color:var(--quiet); font-size:9px; }
+    .work-description { display:block; color:var(--muted); margin-top:5px; font-size:12px; }
+    .work-empty { color:var(--muted); padding:40px 0; }
+    /* ==================== ABOUT / PROCESS ==================== */
+    .about-grid { display:grid; grid-template-columns:.9fr 1.1fr; align-items:center; gap:90px; }
+    .about-art { position:relative; display:flex; flex-direction:column; aspect-ratio:1/.95; border-radius:var(--radius); border:1px solid var(--line); background:radial-gradient(ellipse at 60% 70%,var(--glow),transparent 65%),var(--surface); overflow:hidden; padding:29px; box-shadow:var(--shadow); }
+    .about-art-top { display:flex; justify-content:space-between; color:var(--quiet); font-family:var(--mono); font-size:8px; letter-spacing:.13em; text-transform:uppercase; }
+    .about-initial { margin:auto; position:relative; z-index:1; font-size:clamp(140px,18vw,240px); font-weight:500; letter-spacing:-.12em; line-height:1; color:var(--fg); text-shadow:12px 18px 1px var(--surface-2),20px 35px 25px rgba(0,0,0,.12); transform:rotate(-9deg); }
+    .about-initial span { color:var(--accent); }
+    .about-orbit { position:absolute; width:100%; height:34%; border:1px solid var(--line-hover); border-radius:50%; left:-3%; top:40%; transform:rotate(-33deg); }
+    .about-art-bottom { position:relative; display:flex; justify-content:space-between; align-items:flex-end; font-size:12px; line-height:1.5; color:var(--muted); }
+    .about-art-bottom .brand-mark { width:37px; height:37px; }
+    .about-copy .eyebrow { margin-bottom:24px; }
+    .about-copy>p { margin-top:25px; max-width:475px; color:var(--muted); font-size:14px; line-height:1.9; }
+    .about-copy .text-link { margin-top:20px; }
+    .values { display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:33px; }
+    .value { display:flex; gap:11px; padding-top:17px; border-top:1px solid var(--line); color:var(--muted); font-size:11px; line-height:1.6; }
+    .value .icon { color:var(--accent); width:19px; height:19px; }
+    .value strong { display:block; color:var(--fg); font-weight:500; }
+    .process { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); margin-top:85px; padding-top:31px; border-top:1px solid var(--line); gap:50px; }
+    .process-step { display:flex; gap:19px; }
+    .step-number { color:var(--accent); font-family:var(--mono); font-size:10px; padding-top:4px; }
+    .process h3 { font-size:18px; font-weight:500; letter-spacing:-.04em; margin-bottom:8px; }
+    .process p { font-size:12px; color:var(--muted); line-height:1.8; }
+    /* ==================== CONTACT / FOOTER ==================== */
+    .contact-section { padding:30px 0 80px; }
+    .contact-box { position:relative; overflow:hidden; padding:65px; border:1px solid var(--line-hover); border-radius:26px; background:radial-gradient(ellipse at 98% 110%,var(--glow),transparent 65%),var(--surface); box-shadow:var(--shadow); }
+    .contact-box::after { content:""; position:absolute; width:480px; height:480px; border:1px solid var(--line); border-radius:50%; right:-175px; bottom:-200px; pointer-events:none; }
+    .contact-content { display:grid; grid-template-columns:1.15fr 1fr; gap:80px; align-items:end; position:relative; z-index:1; }
+    .contact-title { font-size:clamp(42px,5.8vw,78px); font-weight:500; letter-spacing:-.064em; line-height:1.02; margin:24px 0 28px; }
+    .contact-title span { color:var(--accent); }
+    .contact-left>p { color:var(--muted); font-size:13px; max-width:350px; }
+    .contact-right { padding-bottom:4px; }
+    .contact-right>p { color:var(--muted); font-size:13px; margin-bottom:23px; max-width:310px; }
+    .email-row { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:25px; }
+    .email-link { font-size:clamp(16px,1.85vw,25px); letter-spacing:-.035em; border-bottom:1px solid var(--line); padding:5px 0; overflow-wrap:anywhere; }
+    .email-link:hover { color:var(--accent); }
+    .copy-email { width:38px; height:38px; min-width:38px; border:0; }
+    .copy-email .icon { width:15px; height:15px; }
+    .contact-location { display:flex; align-items:center; gap:8px; margin-top:15px; color:var(--muted); font-size:11px; }
+    .contact-location .icon { width:15px; height:15px; color:var(--accent); }
+    .footer-top { display:flex; justify-content:space-between; align-items:center; gap:25px; padding:30px 0; border-top:1px solid var(--line); }
+    .footer-top .brand { font-size:17px; }
+    .footer-top .brand-mark { width:24px; height:24px; }
+    .footer-nav { display:flex; gap:25px; color:var(--muted); font-size:11px; }
+    .footer-nav a:hover { color:var(--accent); }
+    .footer-bottom { display:flex; align-items:center; justify-content:space-between; gap:25px; padding:19px 0 30px; color:var(--quiet); border-top:1px solid var(--line); font-size:10px; }
+    .footer-tools { display:flex; align-items:center; gap:24px; }
+    .motion-toggle { display:flex; gap:7px; align-items:center; background:transparent; border:0; padding:10px 0; color:var(--muted); font-size:10px; }
+    .motion-toggle .icon { width:11px; height:11px; }
+    .back-top { display:flex; gap:8px; align-items:center; }
+    .back-top .icon { width:13px; height:13px; transform:rotate(-90deg); }
+    /* ==================== DIALOGS / FORMS ==================== */
+    dialog { width:min(650px,calc(100% - 32px)); max-height:90dvh; padding:0; background:var(--surface); color:var(--fg); border:1px solid var(--line-hover); border-radius:22px; box-shadow:0 35px 120px rgba(0,0,0,.4); }
+    dialog::backdrop { background:rgba(4,12,7,.78); backdrop-filter:blur(8px); }
+    .dialog-inner { padding:36px; }
+    .dialog-top { display:flex; align-items:center; justify-content:space-between; gap:20px; margin-bottom:24px; }
+    .dialog-top .eyebrow { font-size:9px; }
+    .dialog-top .icon-btn { width:39px; height:39px; }
+    .dialog-title { font-size:42px; font-weight:500; line-height:1.06; letter-spacing:-.06em; margin-bottom:15px; }
+    .dialog-description { color:var(--muted); font-size:13px; line-height:1.85; }
+    .project-detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin:29px 0; }
+    .project-detail-grid>div { padding-top:20px; border-top:1px solid var(--line); }
+    .project-detail-grid h3 { font-family:var(--mono); text-transform:uppercase; font-size:9px; letter-spacing:.1em; color:var(--accent); margin-bottom:10px; font-weight:400; }
+    .project-detail-grid p { color:var(--muted); font-size:12px; line-height:1.85; }
+    .concept-disclosure { padding:14px 16px; background:var(--surface-2); border:1px solid var(--line); border-radius:10px; color:var(--muted); font-size:11px; line-height:1.7; margin:25px 0; }
+    .brief-form { margin-top:24px; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .field { display:flex; flex-direction:column; gap:7px; margin-bottom:16px; }
+    .field label { color:var(--fg); font-size:12px; }
+    .field input,.field textarea,.field select { width:100%; border:1px solid var(--line); border-radius:10px; padding:11px 13px; background:var(--bg); color:var(--fg); outline-offset:2px; font-size:13px; min-height:45px; }
+    .field input::placeholder,.field textarea::placeholder { color:var(--quiet); opacity:1; }
+    .field textarea { resize:vertical; min-height:98px; }
+    .form-note { color:var(--muted); font-size:11px; line-height:1.8; margin:5px 0 19px; }
+    .draft-result { margin-top:22px; padding:20px; background:var(--surface-2); border:1px solid var(--line-hover); border-radius:13px; }
+    .draft-result h3 { font-size:18px; font-weight:500; margin-bottom:8px; }
+    .draft-result p { font-size:12px; color:var(--muted); }
+    .draft-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:17px; }
+    .draft-actions .btn { min-height:44px; font-size:11px; padding:11px 16px; gap:12px; }
+    .toast { position:fixed; z-index:100; bottom:24px; left:50%; transform:translate(-50%,20px); opacity:0; pointer-events:none; width:max-content; max-width:calc(100% - 32px); padding:12px 20px; border:1px solid var(--line-hover); border-radius:99px; background:var(--surface); color:var(--fg); font-size:12px; text-align:center; box-shadow:var(--shadow); transition:transform .3s var(--ease),opacity .3s; }
+    .toast.is-visible { transform:translate(-50%,0); opacity:1; }
+    .copy-fallback { width:100%; min-height:110px; margin-top:14px; padding:12px; background:var(--bg); border:1px solid var(--line); color:var(--fg); border-radius:8px; font-size:12px; }
+    .no-js-note { padding:12px 20px; text-align:center; color:var(--muted); background:var(--surface); font-size:12px; }
+    /* ==================== MOTION / RESPONSIVE ==================== */
+    .will-reveal { opacity:0; transform:translateY(24px); transition:opacity .7s var(--ease),transform .7s var(--ease); }
+    .will-reveal.is-visible { opacity:1; transform:translateY(0); }
+    .service-card.is-visible:hover { transform:translateY(-5px); }
+    [data-motion="off"] *,[data-motion="off"] *::before,[data-motion="off"] *::after { animation:none!important; transition:none!important; scroll-behavior:auto!important; }
+    [data-motion="off"] { scroll-behavior:auto; }
+    [data-motion="off"] .will-reveal { opacity:1; transform:none; }
+    @media (prefers-reduced-motion:reduce) {
+      html { scroll-behavior:auto!important; }
+      *,*::before,*::after { animation:none!important; transition:none!important; }
+      .will-reveal { opacity:1!important; transform:none!important; }
+    }
+    @media (min-width:1600px) { .hero-grid { min-height:690px; } }
+    @media (max-width:1100px) {
+      .container { width:calc(100% - 64px); }
+      .nav-links { gap:23px; }
+      .nav { gap:20px; }
+      .nav-cta { padding:10px 15px; }
+      .hero { padding-top:45px; }
+      .hero-grid { min-height:560px; }
+      .hero h1 { font-size:clamp(60px,7.5vw,84px); }
+      .float-card { width:190px; padding:17px; bottom:2%; }
+      .float-card p { font-size:23px; margin:16px 0; }
+      .floating-tag { bottom:9%; left:0; }
+      .floating-tag span { display:none; }
+      .section { padding:88px 0; }
+      .about-grid { gap:55px; }
+      .contact-box { padding:47px; }
+      .contact-content { gap:40px; }
+      .work-grid { gap:18px; }
+      .work-heading { display:block; }
+      .work-category { display:block; margin-top:2px; }
+      .work-description { font-size:11px; }
+      .discipline-row { gap:14px; }
+    }
+    @media (max-width:850px) {
+      .nav { min-height:76px; }
+      .nav-links { gap:17px; }
+      .nav-cta { display:none; }
+      .hero-grid { gap:10px; }
+      .hero h1 { font-size:clamp(54px,7.8vw,68px); }
+      .hero-description { font-size:14px; }
+      .hero-actions .btn { font-size:11px; padding:13px 18px; gap:13px; }
+      .hero-visual { transform:translateY(-25px); }
+      .float-card { width:158px; padding:14px; bottom:-6%; }
+      .float-card-top { font-size:6px; }
+      .float-card p { font-size:21px; }
+      .visual-caption,.floating-tag { display:none; }
+      .discipline-row { gap:12px; }
+      .discipline-row .mono { font-size:8px; letter-spacing:.08em; }
+      .services-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .section-head { gap:35px; }
+      .section-head p { max-width:265px; font-size:13px; }
+      .work-toolbar { align-items:flex-start; }
+      .work-grid { gap:15px; }
+      .concept-label { font-size:6px; right:9px; top:10px; padding:4px 6px; }
+      .work-name { font-size:20px; }
+      .work-description { display:none; }
+      .project-open { width:32px; height:32px; }
+      .about-grid { gap:35px; }
+      .about-copy .section-title { font-size:40px; }
+      .about-copy>p { font-size:13px; }
+      .values { gap:15px; }
+      .about-art { aspect-ratio:1/1.15; padding:23px; }
+      .process { gap:30px; }
+      .contact-content { grid-template-columns:1fr 1fr; gap:30px; }
+      .contact-title { font-size:52px; }
+      .contact-box { padding:38px; }
+      .email-link { font-size:19px; }
+    }
+    @media (max-width:680px) {
+      html { scroll-padding-top:90px; }
+      .container { width:calc(100% - 40px); }
+      .nav { min-height:72px; gap:15px; }
+      .brand { font-size:17px; gap:8px; }
+      .brand-mark { width:26px; height:26px; }
+      .nav-actions { gap:8px; }
+      .theme-toggle { min-height:42px; width:42px; padding:0; justify-content:center; }
+      .theme-label { display:none; }
+      .menu-toggle { display:flex; width:42px; height:42px; }
+      .nav-links { position:absolute; top:calc(100% + 1px); left:0; right:0; padding:14px 20px 23px; background:var(--bg); border-bottom:1px solid var(--line); flex-direction:column; align-items:stretch; gap:0; box-shadow:var(--shadow); }
+      .nav-links a { font-size:16px; padding:12px 5px; }
+      .nav-links a::after { display:none; }
+      .nav-links:not(.is-open) { display:none; }
+      .hero { padding-top:34px; }
+      .hero-grid { grid-template-columns:1fr; gap:0; min-height:auto; }
+      .hero-copy { padding:16px 0 0; }
+      .hero-kicker { margin-bottom:24px; font-size:9px; letter-spacing:.12em; }
+      .hero h1 { font-size:clamp(60px,13.4vw,88px); letter-spacing:-.073em; }
+      .hero-description { margin-top:22px; font-size:14px; max-width:330px; }
+      .hero-actions { margin-top:25px; gap:10px; }
+      .hero-actions .btn { min-height:48px; font-size:12px; padding:12px 16px; gap:14px; }
+      .hero-footnote { margin-top:24px; font-size:10px; }
+      .hero-footnote svg { width:27px; height:27px; }
+      .hero-visual { max-width:450px; margin:20px auto 27px; transform:none; aspect-ratio:1/1; }
+      .sculpture { width:103%; left:-1%; top:-1%; }
+      .visual-corner { top:8%; left:3%; font-size:8px; }
+      .visual-caption { display:block; top:10%; font-size:8px; }
+      .float-card { width:185px; padding:17px; bottom:5%; right:0; }
+      .float-card-top { font-size:7px; }
+      .float-card p { font-size:24px; }
+      .floating-tag { display:flex; bottom:13%; left:3%; }
+      .hero-bottom { padding:19px 0; min-height:65px; }
+      .discipline-row { gap:12px; flex-wrap:wrap; }
+      .discipline-row .mono { font-size:8px; }
+      .discipline-row .brand-mark { width:10px; height:10px; }
+      .hero-bottom>a { flex-shrink:0; }
+      .hero-bottom>a span { display:none; }
+      .section { padding:68px 0; }
+      .section-head { display:block; margin-top:23px; margin-bottom:29px; }
+      .section-title { font-size:43px; }
+      .section-head p { margin-top:21px; max-width:360px; }
+      .eyebrow { font-size:9px; }
+      .services-grid { gap:12px; }
+      .service-card { padding:21px 18px 17px; border-radius:16px; }
+      .service-top { margin-bottom:26px; }
+      .service-icon { width:28px; height:28px; }
+      .service-card h3 { font-size:20px; }
+      .service-card p { font-size:12px; min-height:106px; }
+      .service-tags { font-size:10px; gap:8px; min-height:75px; margin-top:17px; }
+      .service-link { font-size:10px; gap:10px; }
+      .service-link .icon { width:14px; height:14px; }
+      .work-toolbar { flex-direction:column; gap:20px; margin-bottom:24px; }
+      .work-notice { font-size:11px; }
+      .filter { padding-inline:19px; }
+      .work-grid { grid-template-columns:1fr; gap:33px; }
+      .work-heading { display:flex; margin-top:17px; }
+      .work-category { margin:0; font-size:10px; }
+      .work-name { font-size:24px; }
+      .work-description { display:block; font-size:12px; }
+      .concept-label { font-size:7px; top:15px; right:15px; padding:5px 9px; }
+      .project-open { width:38px; height:38px; transform:none; }
+      .about-grid { grid-template-columns:1fr; gap:36px; }
+      .about-art { aspect-ratio:1.15/1; max-width:none; padding:27px; }
+      .about-initial { font-size:230px; }
+      .about-copy .section-title { font-size:43px; }
+      .about-copy>p { font-size:14px; }
+      .values { gap:24px; }
+      .value { font-size:12px; }
+      .process { grid-template-columns:1fr; gap:26px; margin-top:44px; padding-top:28px; }
+      .process-step { gap:23px; }
+      .process p { max-width:370px; font-size:13px; }
+      .contact-section { padding:0 0 42px; }
+      .contact-box { padding:30px 25px; border-radius:20px; }
+      .contact-content { grid-template-columns:1fr; gap:31px; }
+      .contact-title { font-size:51px; margin-top:22px; margin-bottom:19px; }
+      .contact-right>p { display:none; }
+      .contact-right .btn { width:100%; justify-content:space-between; }
+      .email-link { font-size:21px; }
+      .footer-top { align-items:flex-start; flex-direction:column; gap:24px; padding:25px 0; }
+      .footer-nav { gap:28px; }
+      .footer-bottom { align-items:flex-start; flex-direction:column; gap:15px; padding:20px 0; }
+      .footer-tools { justify-content:space-between; width:100%; }
+      .dialog-inner { padding:25px 22px; }
+      .dialog-title { font-size:36px; }
+      .dialog-top { margin-bottom:20px; }
+    }
+    @media (max-width:370px) {
+      .container { width:calc(100% - 32px); }
+      .brand { font-size:15px; }
+      .brand-mark { width:23px; height:23px; }
+      .nav-actions { gap:6px; }
+      .hero h1 { font-size:56px; }
+      .hero-actions .btn { padding:12px 16px; gap:12px; font-size:11px; }
+      .section-title,.about-copy .section-title { font-size:38px; }
+      .services-grid { grid-template-columns:1fr; }
+      .service-card p { min-height:0; }
+      .service-tags { min-height:0; }
+      .service-card { padding:25px; }
+      .contact-title { font-size:44px; }
+      .contact-box { padding:28px 21px; }
+      .email-link { font-size:18px; }
+      .form-row,.project-detail-grid { grid-template-columns:1fr; gap:0; }
+      .project-detail-grid { gap:20px; }
+      .float-card { width:164px; }
+    }
+    @media (hover:none) { .project-open { transform:none; } }
+    @media print {
+      .site-header,.hero-visual,.hero-actions,.hero-bottom,.filters,.footer-tools,dialog,.toast,.service-link,.contact-right .btn,.copy-email { display:none!important; }
+      body { background:white; color:black; }
+      .container { width:100%; }
+      .hero,.section { padding:30px 0; }
+      .hero-grid,.about-grid,.contact-content { display:block; min-height:auto; }
+      .will-reveal { opacity:1; transform:none; }
+      .about-art { display:none; }
+      .contact-box { background:white; padding:25px; }
+    }
+  </style>
+  <noscript><style>.theme-toggle,.menu-toggle,.filters,.motion-toggle{display:none!important}.nav-links{display:flex!important;position:static!important;flex-direction:row!important;flex-wrap:wrap!important;padding:0!important;box-shadow:none!important}.nav{flex-wrap:wrap;padding-block:14px}.project-button{cursor:default}.sculpture,.float-card{animation:none!important}</style></noscript>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<noscript><div class="no-js-note">You're viewing the simplified site. For enquiries, use the email link in the contact section.</div></noscript>
+<header class="site-header">
+  <nav class="nav container" aria-label="Main navigation">
+    <a class="brand" href="#top" aria-label="Made by Kirat home"><svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 3v34M3 20h34M8 8l24 24M8 32 32 8" stroke="currentColor" stroke-width="3.3"/><circle cx="20" cy="20" r="5" fill="currentColor"/></svg><span>Made by Kirat</span></a>
+    <div id="nav-links" class="nav-links">
+      <a href="#services">Services</a><a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to light theme" title="Switch to light theme"><span class="sun-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></span><span class="moon-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 13.3A8.5 8.5 0 0 1 10.7 3.4 8.5 8.5 0 1 0 20.6 13.3Z"/></svg></span><span class="theme-label">Light</span></button>
+      <a class="btn btn-primary nav-cta" href="#contact" data-open-brief>Let's talk <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 5l7 7-7 7"/></svg></a>
+      <button id="menu-toggle" class="icon-btn menu-toggle" type="button" aria-label="Open navigation menu" aria-controls="nav-links" aria-expanded="false"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg></button>
+    </div>
+  </nav>
+  <div class="scroll-progress" aria-hidden="true"></div>
+</header>
+<main id="main">
+  <!-- HERO: edit the headline and positioning here. -->
+  <section id="top" class="hero" aria-labelledby="hero-title">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <div class="hero-kicker"><span class="status-dot" aria-hidden="true"></span>Independent minds. Distinctive brands.</div>
+          <h1 id="hero-title">Small ideas.<span>Big brands.</span></h1>
+          <p class="hero-description">Strategy, design, and a little creative instinct. Turning what makes you different into a brand people feel.</p>
+          <div class="hero-actions"><a class="btn btn-primary" href="#contact" data-open-brief>Start a project <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 5l7 7-7 7"/></svg></a><a class="btn" href="#work">Explore the work <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></div>
+          <div class="hero-footnote"><svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 3v34M3 20h34M8 8l24 24M8 32 32 8" stroke="currentColor" stroke-width="3.3"/><circle cx="20" cy="20" r="5" fill="currentColor"/></svg><span>Small by choice.<br>Thoughtful by design.</span></div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="visual-grid"></div><div class="orbit"></div><div class="orbit orbit-two"></div>
+          <svg class="sculpture" viewBox="0 0 620 620" aria-hidden="true">
+<defs>
+ <linearGradient id="metal" x1="0" x2="1" y1="0" y2=".55"><stop stop-color="#162e27"/><stop offset=".14" stop-color="#84baa3"/><stop offset=".31" stop-color="#e7fff1"/><stop offset=".45" stop-color="#91d7b7"/><stop offset=".56" stop-color="#305e4b"/><stop offset=".71" stop-color="#102c21"/><stop offset=".86" stop-color="#71c29a"/><stop offset="1" stop-color="#bdfcd9"/></linearGradient>
+ <linearGradient id="edge" x2="1" y2="1"><stop stop-color="#effff7" stop-opacity=".8"/><stop offset=".45" stop-color="#7ecc9d" stop-opacity=".1"/><stop offset="1" stop-color="#c0ffe0" stop-opacity=".6"/></linearGradient>
+ <radialGradient id="hub" cx=".33" cy=".2" r=".8"><stop stop-color="#e7fff0"/><stop offset=".25" stop-color="#a8e6c1"/><stop offset=".46" stop-color="#47795e"/><stop offset=".7" stop-color="#142d23"/><stop offset="1" stop-color="#72bf91"/></radialGradient>
+ <filter id="object-shadow" x="-70%" y="-70%" width="240%" height="240%"><feDropShadow dx="12" dy="28" stdDeviation="18" flood-color="#00150d" flood-opacity=".6"/></filter>
+</defs>
+<g transform="translate(310 296) rotate(-14) skewY(-9) scale(1.08 .98)" filter="url(#object-shadow)">
+<g transform="rotate(0)"><path d="M-17-19-31-116Q-37-148-18-161Q1-174 24-158Q42-147 34-122L19-19Z" fill="url(#metal)" stroke="url(#edge)" stroke-width="1.5"/><path d="M-24-115Q-29-138-14-149" fill="none" stroke="#ecfff5" stroke-opacity=".6" stroke-width="3" stroke-linecap="round"/></g><g transform="rotate(45)"><path d="M-17-19-31-116Q-37-148-18-161Q1-174 24-158Q42-147 34-122L19-19Z" fill="url(#metal)" stroke="url(#edge)" stroke-width="1.5"/><path d="M-24-115Q-29-138-14-149" fill="none" stroke="#ecfff5" stroke-opacity=".6" stroke-width="3" stroke-linecap="round"/></g><g transform="rotate(90)"><path d="M-17-19-31-116Q-37-148-18-161Q1-174 24-158Q42-147 34-122L19-19Z" fill="url(#metal)" stroke="url(#edge)" stroke-width="1.5"/><path d="M-24-115Q-29-138-14-149" fill="none" stroke="#ecfff5" stroke-opacity=".6" stroke-width="3" stroke-linecap="round"/></g><g transform="rotate(135)"><path d="M-17-19-31-116Q-37-148-18-161Q1-174 24-158Q42-147 34-122L19-19Z" fill="url(#metal)" stroke="url(#edge)" stroke-width="1.5"/><path d="M-24-115Q-29-138-14-149" fill="none" stroke="#ecfff5" stroke-opacity=".6" stroke-width="3" stroke-linecap="round"/></g><g transform="rotate(180)"><path d="M-17-19-31-116Q-37-148-18-161Q1-174 24-158Q42-147 34-122L19-19Z" fill="url(#metal)" stroke="url(#edge)" stroke-width="1.5"/><path d="M-24-115Q-29-138-14-149" fill="none" stroke="#ecfff5" stroke-opacity=".6" stroke-width="3" stroke-linecap="round"/></g><g transform="rotate(225)"><path d="M-17-19-31-116Q-37-148-18-161Q1-174 24-158Q42-147 34-122L19-19Z" fill="url(#metal)" stroke="url(#edge)" stroke-width="1.5"/><path d="M-24-115Q-29-138-14-149" fill="none" stroke="#ecfff5" stroke-opacity=".6" stroke-width="3" stroke-linecap="round"/></g><g transform="rotate(270)"><path d="M-17-19-31-116Q-37-148-18-161Q1-174 24-158Q42-147 34-122L19-19Z" fill="url(#metal)" stroke="url(#edge)" stroke-width="1.5"/><path d="M-24-115Q-29-138-14-149" fill="none" stroke="#ecfff5" stroke-opacity=".6" stroke-width="3" stroke-linecap="round"/></g><g transform="rotate(315)"><path d="M-17-19-31-116Q-37-148-18-161Q1-174 24-158Q42-147 34-122L19-19Z" fill="url(#metal)" stroke="url(#edge)" stroke-width="1.5"/><path d="M-24-115Q-29-138-14-149" fill="none" stroke="#ecfff5" stroke-opacity=".6" stroke-width="3" stroke-linecap="round"/></g>
+<circle r="57" fill="url(#hub)" stroke="url(#edge)" stroke-width="1.5"/>
+<circle r="24" fill="#0c2018" stroke="#8ad5a9" stroke-width="2"/>
+<path d="M-16 8A20 20 0 0 1 9-17" fill="none" stroke="#e3ffee" stroke-width="2" opacity=".6"/>
+</g></svg>
+          <div class="visual-corner">AN INDEPENDENT<br>CREATIVE PRACTICE</div><div class="visual-caption">STRATEGY<br>CRAFT<br>IMPACT</div>
+          <div class="float-card"><div class="float-card-top"><span>The studio mindset</span><svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 3v34M3 20h34M8 8l24 24M8 32 32 8" stroke="currentColor" stroke-width="3.3"/><circle cx="20" cy="20" r="5" fill="currentColor"/></svg></div><p>A little different.<br>By design.</p><div class="float-card-bottom"><div class="swatches"><span></span><span></span><span></span></div><span class="mono">Made with intent</span></div></div>
+          <div class="floating-tag"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5L12 2Z"/></svg><span>Good ideas.<br>Better possibilities.</span></div>
+        </div>
+      </div>
+      <div class="hero-bottom"><div class="discipline-row"><span class="mono">Branding</span><svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 3v34M3 20h34M8 8l24 24M8 32 32 8" stroke="currentColor" stroke-width="3.3"/><circle cx="20" cy="20" r="5" fill="currentColor"/></svg><span class="mono">Design</span><svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 3v34M3 20h34M8 8l24 24M8 32 32 8" stroke="currentColor" stroke-width="3.3"/><circle cx="20" cy="20" r="5" fill="currentColor"/></svg><span class="mono">Motion</span><svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 3v34M3 20h34M8 8l24 24M8 32 32 8" stroke="currentColor" stroke-width="3.3"/><circle cx="20" cy="20" r="5" fill="currentColor"/></svg><span class="mono">Digital</span></div><a href="#services"><span>A little further down</span><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 5l7 7-7 7"/></svg></a></div>
+    </div>
+  </section>
+  <!-- SERVICES: descriptions and included deliverables are editable. -->
+  <section id="services" class="section" aria-labelledby="services-title">
+    <div class="container">
+      <div class="eyebrow"><span class="number">01 /</span> What we do</div>
+      <div class="section-head reveal"><h2 id="services-title" class="section-title">Different disciplines.<br><span class="soft">One clear direction.</span></h2><p>From your first idea to your next chapter. Creative thinking and careful execution, all in one place.</p></div>
+      <div class="services-grid"><article class="service-card reveal" data-spotlight><div class="service-top"><svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M5.6 18.4 18.4 5.6" stroke-width="3.6"/></svg><span class="mono service-number">01</span></div><h3>Brand Identity</h3><p>A clear idea. A distinctive identity. A brand that feels unmistakably yours.</p><div class="service-tags"><span>Logos &amp; visual direction</span><span>Typography &amp; identity systems</span></div><a class="service-link" href="#contact" data-open-brief data-service="Brand Identity" aria-label="Discuss Brand Identity">Let's make it happen <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></article><article class="service-card reveal" data-spotlight><div class="service-top"><svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="12" height="12" rx="1"/><rect x="9" y="9" width="12" height="12" rx="1"/></svg><span class="mono service-number">02</span></div><h3>Graphic Design</h3><p>Thoughtful visual communication, from the first impression to the final detail.</p><div class="service-tags"><span>Campaign &amp; print design</span><span>Presentations &amp; visual assets</span></div><a class="service-link" href="#contact" data-open-brief data-service="Graphic Design" aria-label="Discuss Graphic Design">Let's make it happen <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></article><article class="service-card reveal" data-spotlight><div class="service-top"><svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="5"/><circle cx="17" cy="6" r="3"/><circle cx="19" cy="18" r="2"/></svg><span class="mono service-number">03</span></div><h3>Social Media</h3><p>A consistent creative presence that gives people a reason to stop scrolling.</p><div class="service-tags"><span>Content &amp; design systems</span><span>Social media creative</span></div><a class="service-link" href="#contact" data-open-brief data-service="Social Media" aria-label="Discuss Social Media">Let's make it happen <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></article><article class="service-card reveal" data-spotlight><div class="service-top"><svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V13M10 20V8M16 20V3M22 20H2"/></svg><span class="mono service-number">04</span></div><h3>Marketing</h3><p>Creative campaigns with a direction, a purpose, and your goals at the centre.</p><div class="service-tags"><span>Campaign strategy</span><span>Promotional design</span></div><a class="service-link" href="#contact" data-open-brief data-service="Marketing" aria-label="Discuss Marketing">Let's make it happen <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></article><article class="service-card reveal" data-spotlight><div class="service-top"><svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4V8Z"/></svg><span class="mono service-number">05</span></div><h3>Video &amp; Motion</h3><p>A little movement. A lot more feeling. Bring your brand story to life.</p><div class="service-tags"><span>Short-form videos &amp; reels</span><span>Editing &amp; motion design</span></div><a class="service-link" href="#contact" data-open-brief data-service="Video &amp; Motion" aria-label="Discuss Video &amp; Motion">Let's make it happen <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></article><article class="service-card reveal" data-spotlight><div class="service-top"><svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 10 5-10 5L2 8l10-5Zm-9 9 9 5 9-5M3 16l9 5 9-5"/></svg><span class="mono service-number">06</span></div><h3>Digital</h3><p>Landing pages and digital experiences that bring your identity into the everyday.</p><div class="service-tags"><span>Landing page design</span><span>Digital brand experiences</span></div><a class="service-link" href="#contact" data-open-brief data-service="Digital" aria-label="Discuss Digital">Let's make it happen <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a></article></div>
+    </div>
+  </section>
+  <!-- PORTFOLIO: demo concepts only. Replace with verified client projects before representing these as client work. -->
+  <section id="work" class="section work-section" aria-labelledby="work-title">
+    <div class="container">
+      <div class="eyebrow"><span class="number">02 /</span> The creative playground</div>
+      <div class="section-head reveal"><h2 id="work-title" class="section-title">A feel for<br><span class="accent">what's possible.</span></h2><p>Identity, expression, and digital exploration. Three directions. One attention to detail.</p></div>
+      <div class="work-toolbar"><p class="work-notice">Illustrative concept studies, created for this site. Not commissioned client projects.</p><div class="filters" role="group" aria-label="Filter concept studies"><button class="filter" type="button" data-filter="All" aria-pressed="true">All work</button><button class="filter" type="button" data-filter="Branding" aria-pressed="false">Branding</button><button class="filter" type="button" data-filter="Digital" aria-pressed="false">Digital</button></div></div>
+      <div class="work-grid"><article class="work-card reveal" data-category="Branding"><button class="project-button" type="button" data-project="velora" aria-label="Explore Velora concept"><span class="work-art"><svg viewBox="0 0 560 460" role="img" aria-label="Velora concept: sage-green skincare packaging on a warm ivory background">
+<defs><linearGradient id="vbg" x2="1" y2="1"><stop stop-color="#eeeee2"/><stop offset="1" stop-color="#cbd4bf"/></linearGradient><linearGradient id="vbox"><stop stop-color="#7a8d67"/><stop offset=".5" stop-color="#a5b390"/><stop offset="1" stop-color="#809271"/></linearGradient><linearGradient id="vbottle"><stop stop-color="#899a79"/><stop offset=".27" stop-color="#b1bda0"/><stop offset=".7" stop-color="#9aab85"/><stop offset="1" stop-color="#657b56"/></linearGradient><filter id="vshadow" x="-90%" y="-50%" width="280%" height="230%"><feDropShadow dx="20" dy="24" stdDeviation="15" flood-color="#263921" flood-opacity=".22"/></filter></defs>
+<path fill="url(#vbg)" d="M0 0h560v460H0z"/><circle cx="460" cy="-40" r="280" fill="#f6f5eb" opacity=".38"/>
+<text x="34" y="44" fill="#47573e" font-family="Arial,sans-serif" font-size="10" letter-spacing="3">THE EVERYDAY, REIMAGINED.</text>
+<g transform="translate(310 90) rotate(12)" filter="url(#vshadow)"><path d="M0 0h93l22 15v241H0z" fill="#5e714f"/><path d="M0 0h93v256H0z" fill="url(#vbox)"/><path d="m93 0 22 15H22L0 0" fill="#b6c19f"/><text x="17" y="52" font-family="Georgia,serif" fill="#f9f8ee" font-size="23">Velora</text><path d="M16 174h61" stroke="#e1e5d4" stroke-width=".8"/><text x="17" y="199" fill="#edf0e3" font-family="Arial,sans-serif" font-size="7" letter-spacing="1.4">DAILY RESET</text><text x="17" y="213" fill="#edf0e3" font-family="Arial,sans-serif" font-size="6">A little care. A better day.</text></g>
+<g transform="translate(166 125) rotate(-9)" filter="url(#vshadow)"><rect x="16" y="0" width="76" height="43" rx="6" fill="#3c4c32"/><path d="M16 31h76v17q20 10 20 32v143q0 21-23 21H22q-23 0-23-21V80q0-24 17-32Z" fill="url(#vbottle)"/><path d="M8 82v134" stroke="#e9f2d9" stroke-opacity=".3" stroke-width="5" stroke-linecap="round"/><text x="19" y="116" fill="#f7f5e8" font-family="Georgia,serif" font-size="28">Velora</text><text x="23" y="140" fill="#f2f3e6" font-family="Arial,sans-serif" font-size="6.5" letter-spacing="2">LESS, BUT BETTER.</text><path d="M23 184h65" stroke="#d6dfc8"/><text x="23" y="202" fill="#f2f3e6" font-family="Arial,sans-serif" font-size="7">DAILY RESET / 100 ML</text></g>
+<text x="34" y="430" fill="#35452f" font-family="Georgia,serif" font-size="44" letter-spacing="-2">Velora</text><text x="462" y="426" fill="#47573e" font-family="Arial,sans-serif" font-size="8" letter-spacing="2">NO. 001</text></svg><span class="concept-label">Concept study</span><span class="project-open"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></span><span class="work-heading"><span class="work-name">Velora</span><span class="work-category">Identity / Packaging</span></span><span class="work-description">An identity rooted in the everyday.</span></button></article><article class="work-card reveal" data-category="Branding"><button class="project-button" type="button" data-project="brew" aria-label="Explore Brew &amp; Co. concept"><span class="work-art"><svg viewBox="0 0 560 460" role="img" aria-label="Brew and Co. concept: expressive coffee packaging in warm terracotta and cream">
+<defs><linearGradient id="bbg" x2="1" y2="1"><stop stop-color="#f0a272"/><stop offset="1" stop-color="#c66845"/></linearGradient><linearGradient id="bcup"><stop stop-color="#d6c6a6"/><stop offset=".33" stop-color="#f7edcf"/><stop offset=".8" stop-color="#e5d4ae"/><stop offset="1" stop-color="#baa483"/></linearGradient><filter id="bshadow" x="-60%" y="-50%" width="240%" height="240%"><feDropShadow dx="16" dy="25" stdDeviation="17" flood-color="#482313" flood-opacity=".35"/></filter></defs>
+<path fill="url(#bbg)" d="M0 0h560v460H0z"/><path d="M0 330 560 150v310H0Z" fill="#d5794d" opacity=".5"/>
+<text x="30" y="45" font-family="Arial,sans-serif" font-size="10" fill="#4c281a" letter-spacing="3">A DAILY DOSE OF GOOD.</text>
+<g fill="none" stroke="#6e3524" opacity=".17" stroke-width="1"><circle cx="443" cy="268" r="124"/><circle cx="443" cy="268" r="160"/><circle cx="443" cy="268" r="194"/></g>
+<g transform="translate(150 92) rotate(-12 110 120)" filter="url(#bshadow)"><path d="m14 36 28 232q67 31 137-1l28-231Z" fill="url(#bcup)"/><ellipse cx="111" cy="267" rx="68" ry="12" fill="#d8c49c"/><rect x="-1" y="29" width="223" height="28" rx="11" fill="#302a22"/><ellipse cx="111" cy="27" rx="111" ry="25" fill="#42392d"/><ellipse cx="111" cy="22" rx="91" ry="18" fill="#51473a"/><path d="M31 24q80-27 158 0" fill="none" stroke="#7c705c" stroke-width="2"/><text x="42" y="125" fill="#523124" font-family="Arial,sans-serif" font-size="34" font-weight="900" letter-spacing="-2">BREW</text><text x="54" y="163" fill="#523124" font-family="Arial,sans-serif" font-size="34" font-weight="900" letter-spacing="-2">&amp; CO.</text><path d="M54 183q53 21 101 0" fill="none" stroke="#523124" stroke-width="2"/><text x="67" y="216" fill="#523124" font-family="Arial,sans-serif" font-size="7" letter-spacing="2">GOOD DAYS AHEAD</text></g>
+<text x="32" y="431" fill="#4c281a" font-family="Arial,sans-serif" font-size="28" font-weight="800" letter-spacing="-1">Brew &amp; Co.</text><text x="460" y="426" fill="#4c281a" font-family="Arial,sans-serif" font-size="8" letter-spacing="2">NO. 002</text></svg><span class="concept-label">Concept study</span><span class="project-open"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></span><span class="work-heading"><span class="work-name">Brew &amp; Co.</span><span class="work-category">Campaign / Packaging</span></span><span class="work-description">A fresh take on a daily ritual.</span></button></article><article class="work-card reveal" data-category="Digital"><button class="project-button" type="button" data-project="altitude" aria-label="Explore Altitude concept"><span class="work-art"><svg viewBox="0 0 560 460" role="img" aria-label="Altitude concept: experimental digital art with lilac contour lines and a luminous orb">
+<defs><linearGradient id="abg" x2="1" y2="1"><stop stop-color="#26243c"/><stop offset="1" stop-color="#11121b"/></linearGradient><radialGradient id="aorb" cx=".26" cy=".24" r=".78"><stop stop-color="#faf4ff"/><stop offset=".22" stop-color="#d6c2ff"/><stop offset=".56" stop-color="#9a7be5"/><stop offset=".85" stop-color="#433d72"/><stop offset="1" stop-color="#201f34"/></radialGradient><filter id="aglow" x="-80%" y="-80%" width="260%" height="260%"><feDropShadow dx="10" dy="22" stdDeviation="26" flood-color="#9e70ff" flood-opacity=".2"/></filter></defs>
+<path fill="url(#abg)" d="M0 0h560v460H0z"/><g fill="none" stroke="#bda3fb" stroke-opacity=".2" stroke-width=".8"><ellipse cx="370" cy="280" rx="60" ry="43" transform="rotate(-34 370 280)"/><ellipse cx="370" cy="280" rx="80" ry="59" transform="rotate(-34 370 280)"/><ellipse cx="370" cy="280" rx="100" ry="75" transform="rotate(-34 370 280)"/><ellipse cx="370" cy="280" rx="120" ry="91" transform="rotate(-34 370 280)"/><ellipse cx="370" cy="280" rx="140" ry="107" transform="rotate(-34 370 280)"/><ellipse cx="370" cy="280" rx="160" ry="123" transform="rotate(-34 370 280)"/><ellipse cx="370" cy="280" rx="180" ry="139" transform="rotate(-34 370 280)"/><ellipse cx="370" cy="280" rx="200" ry="155" transform="rotate(-34 370 280)"/><ellipse cx="370" cy="280" rx="220" ry="171" transform="rotate(-34 370 280)"/><ellipse cx="370" cy="280" rx="240" ry="187" transform="rotate(-34 370 280)"/><ellipse cx="370" cy="280" rx="260" ry="203" transform="rotate(-34 370 280)"/><ellipse cx="370" cy="280" rx="280" ry="219" transform="rotate(-34 370 280)"/><ellipse cx="370" cy="280" rx="300" ry="235" transform="rotate(-34 370 280)"/></g>
+<text x="32" y="45" fill="#ddcfff" font-family="Arial,sans-serif" font-size="10" letter-spacing="3">BEYOND THE ORDINARY.</text><circle class="project-orb" cx="365" cy="244" r="100" fill="url(#aorb)" filter="url(#aglow)"/>
+<text x="35" y="172" fill="#f4effc" font-family="Arial,sans-serif" font-size="63" font-weight="500" letter-spacing="-4">Higher</text><text x="35" y="237" fill="#f4effc" font-family="Arial,sans-serif" font-size="63" font-weight="500" letter-spacing="-4">by design.</text><path d="M46 286h66m-15-15 15 15-15 15" fill="none" stroke="#d3bcff" stroke-width="1.7"/>
+<text x="32" y="430" fill="#ddcfff" font-family="Arial,sans-serif" font-size="25" letter-spacing="5">ALTITUDE</text><text x="460" y="426" fill="#ddcfff" font-family="Arial,sans-serif" font-size="8" letter-spacing="2">NO. 003</text></svg><span class="concept-label">Concept study</span><span class="project-open"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></span><span class="work-heading"><span class="work-name">Altitude</span><span class="work-category">Digital / Motion</span></span><span class="work-description">A digital world with a different perspective.</span></button></article></div>
+      <p class="sr-only" id="filter-status" role="status" aria-live="polite">Showing all 3 concept studies.</p>
+    </div>
+  </section>
+  <!-- ABOUT: keeps the source's independent-studio positioning. -->
+  <section id="about" class="section" aria-labelledby="about-title">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-art reveal" aria-hidden="true"><div class="about-art-top"><span>Made by Kirat</span><span>Independent / Creative</span></div><div class="about-orbit"></div><div class="about-initial">K<span>.</span></div><div class="about-art-bottom"><span>Strategy in the thinking.<br>Craft in the making.</span><svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 3v34M3 20h34M8 8l24 24M8 32 32 8" stroke="currentColor" stroke-width="3.3"/><circle cx="20" cy="20" r="5" fill="currentColor"/></svg></div></div>
+        <div class="about-copy reveal"><div class="eyebrow"><span class="number">03 /</span> Behind the studio</div><h2 id="about-title" class="section-title">Small studio.<br><span class="accent">Bigger purpose.</span></h2><p>Made by Kirat is a creative studio bringing strategy and visual craft together. A place for considered identities, compelling content, and digital experiences with a point of view.</p><p>The approach is simple: understand what makes you different, then make every detail work towards it.</p><a class="text-link" href="#contact" data-open-brief>Meet your next creative partner <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a><div class="values"><div class="value"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5L12 2Z"/></svg><span><strong>Design-led thinking</strong>Ideas before aesthetics.</span></div><div class="value"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></svg><span><strong>Craft with purpose</strong>Every detail earns its place.</span></div></div></div>
+      </div>
+      <div class="process" aria-label="Our proposed working process"><div class="process-step reveal"><span class="step-number">01</span><div><h3>Find the starting point.</h3><p>Talk about your story, your audience, and what the next chapter should look like.</p></div></div><div class="process-step reveal"><span class="step-number">02</span><div><h3>Make the idea tangible.</h3><p>Explore a creative direction, shape the details, and refine it together.</p></div></div><div class="process-step reveal"><span class="step-number">03</span><div><h3>Put it into the world.</h3><p>Bring the pieces together in a considered, consistent expression of your brand.</p></div></div></div>
+    </div>
+  </section>
+  <!-- CONTACT: verify the email address and location before launch. -->
+  <section id="contact" class="contact-section" aria-labelledby="contact-title">
+    <div class="container"><div class="contact-box reveal"><div class="contact-content"><div class="contact-left"><div class="eyebrow"><span class="number">04 /</span> Your next chapter</div><h2 id="contact-title" class="contact-title">Let's make<br><span>something<br>matter.</span></h2><p>A new idea, a fresh start, or a different direction.<br>It starts with a conversation.</p></div><div class="contact-right"><p>Have a project in mind?<br>Tell me a little about what you're imagining.</p><a class="btn btn-primary" href="mailto:hello@madebykirat.com" data-email-link data-open-brief>Start a conversation <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a><div class="email-row"><a class="email-link" href="mailto:hello@madebykirat.com" data-email-link data-email-text>hello@madebykirat.com</a><button class="icon-btn copy-email" type="button" aria-label="Copy email address" title="Copy email address"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg></button></div><div class="contact-location"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.5"/></svg><span data-location>Punjab, India</span><span aria-hidden="true">&middot;</span><span>Independent creative studio</span></div></div></div></div></div>
+  </section>
+</main>
+<footer class="container"><div class="footer-top"><a class="brand" href="#top"><svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 3v34M3 20h34M8 8l24 24M8 32 32 8" stroke="currentColor" stroke-width="3.3"/><circle cx="20" cy="20" r="5" fill="currentColor"/></svg><span>Made by Kirat</span></a><nav class="footer-nav" aria-label="Footer navigation"><a href="#services">Services</a><a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a></nav></div><div class="footer-bottom"><span>&copy; <span id="year">2026</span> Made by Kirat. Small ideas. Big brands.</span><div class="footer-tools"><button id="motion-toggle" class="motion-toggle" type="button" aria-label="Pause decorative motion"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg><span>Motion on</span></button><a class="back-top" href="#top">Back to top <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 5l7 7-7 7"/></svg></a></div></div></footer>
+<!-- Native dialogs provide keyboard focus management, Escape-to-close and a modal backdrop. -->
+<dialog id="project-dialog" aria-labelledby="project-title" aria-describedby="project-description"><div class="dialog-inner"><div class="dialog-top"><div class="eyebrow">Independent concept study</div><button class="icon-btn" type="button" data-close-dialog aria-label="Close project details"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button></div><h2 id="project-title" class="dialog-title"></h2><p id="project-description" class="dialog-description"></p><div class="project-detail-grid"><div><h3>The direction</h3><p id="project-direction"></p></div><div><h3>The expression</h3><p id="project-expression"></p></div></div><p class="concept-disclosure">This is a fictional, illustrative concept created for this website. It is not a commissioned project, a client endorsement, or a claim of commercial results.</p><a class="btn btn-primary" href="#contact" id="project-enquiry" data-open-brief>Let's explore your idea <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 5l7 7-7 7"/></svg></a></div></dialog>
+<dialog id="brief-dialog" aria-labelledby="brief-title" aria-describedby="brief-description"><div class="dialog-inner"><div class="dialog-top"><div class="eyebrow">A good place to start</div><button class="icon-btn" type="button" data-close-dialog aria-label="Close project enquiry"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button></div><h2 class="dialog-title" id="brief-title">What's on your mind?</h2><p class="dialog-description" id="brief-description">Share a little about your project and we'll send your enquiry directly to the studio.</p>
+<form class="brief-form" id="brief-form" action="https://formsubmit.co/ajax/hello@madebykirat.com" method="POST">
+  <input type="hidden" name="_subject" id="form-subject" value="New project enquiry - Made by Kirat">
+  <input type="hidden" name="_template" value="table">
+  <input type="text" name="_honey" value="" tabindex="-1" autocomplete="off" style="display:none"><div class="form-row"><div class="field"><label for="client-name">Your name <span aria-hidden="true">*</span></label><input id="client-name" name="name" type="text" autocomplete="name" maxlength="100" placeholder="Your name" required></div><div class="field"><label for="client-email">Email address <span aria-hidden="true">*</span></label><input id="client-email" name="email" type="email" autocomplete="email" maxlength="180" placeholder="you@yourbrand.com" required></div></div><div class="field"><label for="project-service">What can we help with?</label><select id="project-service" name="service"><option value="Not sure yet">Let's figure it out together</option><option>Brand Identity</option><option>Graphic Design</option><option>Social Media</option><option>Marketing</option><option>Video &amp; Motion</option><option>Digital</option></select></div><div class="field"><label for="project-brief">A little about your project <span aria-hidden="true">*</span></label><textarea id="project-brief" name="brief" maxlength="1200" placeholder="What are you creating? What would you like to change?" required></textarea></div><p class="form-note">Required fields are marked *. Your enquiry will be sent directly to hello@madebykirat.com.</p><button class="btn btn-primary" type="submit">Send enquiry <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 5l7 7-7 7"/></svg></button></form>
+<div class="draft-result" id="draft-result" hidden tabindex="-1"><h3 id="result-title">Enquiry sent.</h3><p id="result-message">Thanks — your enquiry has been sent to hello@madebykirat.com. I\'ll get back to you soon.</p></div>
+</div></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+'use strict';
+(() => {
+  // ==================== CONTENT CONFIG ====================
+  // Kept from the supplied HTML. Confirm the mailbox before publishing.
+  const SITE = Object.freeze({ email: 'hello@madebykirat.com', location: 'Punjab, India' });
+  // These are explicitly labelled fictional concepts, never real client results.
+  const PROJECTS = Object.freeze({
+    velora: { title:'Velora', description:'A quieter kind of beauty brand. A concept identity exploring daily care through soft colour, considered typography, and simple packaging.', direction:'Make an everyday ritual feel intentional. Sage greens and warm ivory create a calm, natural visual language.', expression:'A wordmark, a restrained colour system, and a paired bottle-and-carton packaging exploration.', service:'Brand Identity' },
+    brew: { title:'Brew & Co.', description:'A warm, expressive coffee concept built around the small joy of a familiar daily ritual.', direction:'Give a daily coffee a little more character. Confident type and a terracotta palette keep the tone friendly and direct.', expression:'An expressive wordmark, takeaway cup packaging, and a campaign-ready visual direction.', service:'Graphic Design' },
+    altitude: { title:'Altitude', description:'An experimental digital concept exploring space, movement, and a different point of view.', direction:'Create a sense of exploration without relying on visual clutter. Topographic lines meet a luminous sculptural form.', expression:'A digital art direction pairing strong editorial type with atmospheric colour and motion-ready forms.', service:'Digital' }
+  });
+  const root = document.documentElement;
+  const $ = (selector, parent = document) => parent.querySelector(selector);
+  const $$ = (selector, parent = document) => [...parent.querySelectorAll(selector)];
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const savePreference = (key, value) => { try { localStorage.setItem(key, value); } catch (_) { /* Private/file contexts still work without persistence. */ } };
+  const toast = $('#toast');
+  let toastTimer;
+  function notify(message) { clearTimeout(toastTimer); toast.textContent = message; toast.classList.add('is-visible'); toastTimer = setTimeout(() => toast.classList.remove('is-visible'), 4500); }
+  // Theme toggle: update both the page and the browser theme colour.
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    const next = theme === 'dark' ? 'light' : 'dark';
+    const label = 'Switch to ' + next + ' theme';
+    $('#theme-toggle').setAttribute('aria-label', label);
+    $('#theme-toggle').title = label;
+    $('.theme-label').textContent = next[0].toUpperCase() + next.slice(1);
+    $('meta[name="theme-color"]').content = theme === 'dark' ? '#0c100f' : '#f3f4ed';
+  }
+  applyTheme(root.dataset.theme || 'dark');
+  $('#theme-toggle').addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    applyTheme(next); savePreference('mbk-theme', next);
+  });
+  // Motion can be disabled at any time; OS reduced-motion takes priority.
+  function syncMotion() {
+    const off = root.dataset.motion === 'off' || reduced.matches;
+    root.dataset.motion = off ? 'off' : 'on';
+    $('#motion-toggle span').textContent = off ? 'Motion off' : 'Motion on';
+    $('#motion-toggle').setAttribute('aria-label', off ? 'Enable decorative motion' : 'Pause decorative motion');
+    $('#motion-toggle').setAttribute('aria-pressed', String(!off));
+    if (off) $$('.will-reveal').forEach(el => el.classList.add('is-visible'));
+  }
+  syncMotion();
+  $('#motion-toggle').addEventListener('click', () => {
+    if (reduced.matches) { notify('Reduced motion is enabled in your device settings.'); return; }
+    root.dataset.motion = root.dataset.motion === 'on' ? 'off' : 'on';
+    savePreference('mbk-motion', root.dataset.motion); syncMotion();
+  });
+  const onReducedChange = () => { if (reduced.matches) root.dataset.motion = 'off'; syncMotion(); };
+  if (reduced.addEventListener) reduced.addEventListener('change', onReducedChange);
+  // Mobile navigation: Escape, outside click and link activation all close it.
+  const menuButton = $('#menu-toggle');
+  const navigation = $('#nav-links');
+  function setMenu(open) {
+    navigation.classList.toggle('is-open', open);
+    menuButton.setAttribute('aria-expanded', String(open));
+    menuButton.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+    menuButton.innerHTML = open ? '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg>' : '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg>';
+  }
+  menuButton.addEventListener('click', () => setMenu(menuButton.getAttribute('aria-expanded') !== 'true'));
+  $$('a', navigation).forEach(link => link.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('click', event => { if (!event.composedPath().includes($('.site-header'))) setMenu(false); });
+  document.addEventListener('keydown', event => { if (event.key === 'Escape' && menuButton.getAttribute('aria-expanded') === 'true') { setMenu(false); menuButton.focus(); } });
+  // All content is visible without JS. Only offscreen elements are revealed.
+  if ('IntersectionObserver' in window && root.dataset.motion !== 'off' && !reduced.matches) {
+    const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); }
+    }), { threshold:.07, rootMargin:'0px 0px 40px 0px' });
+    $$('.reveal').forEach(el => { if (el.getBoundingClientRect().top > innerHeight) { el.classList.add('will-reveal'); observer.observe(el); } });
+  }
+  // A scroll event schedules at most one animation frame; no continuous JS loop.
+  let scrollScheduled = false;
+  function updateScroll() {
+    const total = document.documentElement.scrollHeight - innerHeight;
+    $('.scroll-progress').style.transform = 'scaleX(' + (total > 0 ? Math.min(1, Math.max(0, scrollY / total)) : 0) + ')';
+    let current = '';
+    ['services','work','about','contact'].forEach(id => { if ($('#' + id).getBoundingClientRect().top <= Math.max(150, innerHeight * .3)) current = id; });
+    $$('a', navigation).forEach(link => { if (link.hash === '#' + current) link.setAttribute('aria-current','location'); else link.removeAttribute('aria-current'); });
+    scrollScheduled = false;
+  }
+  function requestScrollUpdate() { if (!scrollScheduled) { scrollScheduled = true; requestAnimationFrame(updateScroll); } }
+  addEventListener('scroll', requestScrollUpdate, { passive:true });
+  addEventListener('resize', () => { requestScrollUpdate(); if (innerWidth > 680) setMenu(false); }, { passive:true });
+  updateScroll();
+  // Local hover light, only on fine pointers and only while motion is enabled.
+  if (matchMedia('(pointer:fine)').matches) $$('[data-spotlight]').forEach(card => {
+    card.addEventListener('pointermove', event => {
+      if (root.dataset.motion === 'off') return;
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--mx', (event.clientX - rect.left) + 'px');
+      card.style.setProperty('--my', (event.clientY - rect.top) + 'px');
+    }, { passive:true });
+  });
+  // Portfolio filters keep keyboard semantics and announce the result count.
+  $$('.filter').forEach(button => button.addEventListener('click', () => {
+    const filter = button.dataset.filter; let count = 0;
+    $$('.filter').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+    $$('.work-card').forEach(card => {
+      card.hidden = filter !== 'All' && card.dataset.category !== filter;
+      if (!card.hidden) { count++; card.classList.add('is-visible'); }
+    });
+    $('#filter-status').textContent = 'Showing ' + count + ' ' + (filter === 'All' ? '' : filter.toLowerCase() + ' ') + 'concept ' + (count === 1 ? 'study.' : 'studies.');
+    requestScrollUpdate();
+  }));
+  // Native dialog interaction. Keep focus restoration under explicit control.
+  let lastTrigger = null;
+  function closeDialog(dialog, restoreFocus = true) {
+    if (dialog.open) dialog.close();
+    document.body.classList.remove('dialog-open');
+    if (restoreFocus && lastTrigger && document.contains(lastTrigger)) lastTrigger.focus({ preventScroll:true });
+  }
+  function openDialog(dialog, trigger) {
+    if (typeof dialog.showModal !== 'function') { location.hash = 'contact'; return false; }
+    $$('dialog[open]').forEach(other => closeDialog(other, false));
+    lastTrigger = trigger;
+    setMenu(false);
+    dialog.showModal();
+    document.body.classList.add('dialog-open');
+    return true;
+  }
+  $$('dialog').forEach(dialog => {
+    $$('[data-close-dialog]', dialog).forEach(button => button.addEventListener('click', () => closeDialog(dialog)));
+    dialog.addEventListener('cancel', event => { event.preventDefault(); closeDialog(dialog); });
+    dialog.addEventListener('click', event => {
+      const rect = dialog.getBoundingClientRect();
+      if (event.target === dialog && (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom)) closeDialog(dialog);
+    });
+  });
+  $$('[data-project]').forEach(button => button.addEventListener('click', () => {
+    const project = PROJECTS[button.dataset.project];
+    if (!project) return;
+    $('#project-title').textContent = project.title;
+    $('#project-description').textContent = project.description;
+    $('#project-direction').textContent = project.direction;
+    $('#project-expression').textContent = project.expression;
+    $('#project-enquiry').dataset.service = project.service;
+    openDialog($('#project-dialog'), button);
+  }));
+  $$('[data-open-brief]').forEach(trigger => trigger.addEventListener('click', event => {
+    if (typeof $('#brief-dialog').showModal !== 'function') return;
+    event.preventDefault();
+    const service = trigger.dataset.service;
+    if (service && [...$('#project-service').options].some(option => option.value === service)) $('#project-service').value = service;
+    $('#draft-result').hidden = true;
+    // When moving from the project dialog, restore focus to its original tile.
+    const focusTarget = trigger.closest('dialog') ? lastTrigger : trigger;
+    openDialog($('#brief-dialog'), focusTarget);
+  }));
+  // Apply public contact details in one place; no personal submissions are saved.
+  $$('[data-email-text]').forEach(el => el.textContent = SITE.email);
+  $$('[data-email-link]').forEach(el => el.href = 'mailto:' + SITE.email);
+  $$('[data-location]').forEach(el => el.textContent = SITE.location);
+  $('#year').textContent = new Date().getFullYear();
+  async function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      try { await navigator.clipboard.writeText(text); return true; } catch (_) { /* Fall back for file previews, permissions and older browsers. */ }
+    }
+    const temp = document.createElement('textarea');
+    temp.value = text; temp.setAttribute('readonly','');
+    temp.style.cssText = 'position:fixed;left:0;top:0;opacity:0;width:1px;height:1px;pointer-events:none';
+    const parent = $('dialog[open]') || document.body;
+    parent.appendChild(temp); temp.select(); temp.setSelectionRange(0,temp.value.length);
+    let copied = false;
+    try { copied = document.execCommand('copy'); } catch (_) { copied = false; }
+    temp.remove(); return copied;
+  }
+  $('.copy-email').addEventListener('click', async () => {
+    const success = await copyText(SITE.email);
+    notify(success ? 'Email address copied.' : 'Please select and copy: ' + SITE.email);
+  });
+  const form = $('#brief-form');
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    const nameInput = $('#client-name');
+    const emailInput = $('#client-email');
+    const briefInput = $('#project-brief');
+    nameInput.setCustomValidity(nameInput.value.trim() ? '' : 'Please enter your name.');
+    emailInput.setCustomValidity(emailInput.value.trim() ? '' : 'Please enter your email address.');
+    briefInput.setCustomValidity(briefInput.value.trim() ? '' : 'Please add a little about your project.');
+    if (!form.reportValidity()) return;
+
+    const submitButton = form.querySelector('button[type="submit"]');
+    const originalButton = submitButton.innerHTML;
+    const name = nameInput.value.trim();
+    const service = $('#project-service').value;
+    $('#form-subject').value = 'Project enquiry - ' + service + ' - ' + name;
+    submitButton.disabled = true;
+    submitButton.textContent = 'Sending…';
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || result.success === false) throw new Error('Submission failed');
+      $('#result-title').textContent = 'Enquiry sent.';
+      $('#result-message').textContent = 'Thanks — your enquiry has been sent to hello@madebykirat.com. I\'ll get back to you soon.';
+      $('#draft-result').hidden = false;
+      $('#draft-result').focus({ preventScroll:true });
+      $('#draft-result').scrollIntoView({ block:'nearest', behavior:root.dataset.motion === 'off' ? 'auto' : 'smooth' });
+      form.reset();
+      $('#project-service').value = service;
+    } catch (_) {
+      $('#result-title').textContent = 'Something went wrong.';
+      $('#result-message').textContent = 'Your enquiry could not be sent right now. Please email hello@madebykirat.com directly.';
+      $('#draft-result').hidden = false;
+      $('#draft-result').focus({ preventScroll:true });
+    } finally {
+      submitButton.disabled = false;
+      submitButton.innerHTML = originalButton;
+    }
+  });
+  ['client-name','client-email','project-brief'].forEach(id => $('#' + id).addEventListener('input', event => event.target.setCustomValidity('')));
+
+  // Pause decorative animation when the document is in a background tab.
+  document.addEventListener('visibilitychange', () => {
+    $$('.sculpture,.float-card').forEach(el => { el.style.animationPlayState = document.hidden ? 'paused' : ''; });
+  });
+})();
+</script>
+</body>
+</html>
