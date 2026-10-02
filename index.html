@@ -786,7 +786,6 @@ const response = await fetch('https://contact-api.kiratjotsingh094.workers.dev/a
     website: data.get('_honey') || ''
   })
 });
-      });
       const result = await response.json().catch(() => ({}));
       if (!response.ok || result.success === false) throw new Error('Submission failed');
       $('#result-title').textContent = 'Enquiry sent.';
