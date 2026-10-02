@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Made by Kirat — Enquiries</title>
+<style>
+:root{--bg:#f3f4ed;--surface:#fafbf5;--fg:#19261e;--muted:#536157;--line:rgba(25,51,32,.15);--accent:#216742}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font-family:Arial,Helvetica,sans-serif}
+main{width:min(1120px,calc(100% - 40px));margin:50px auto}.top{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:30px}
+h1{font-size:42px;font-weight:500;letter-spacing:-.05em;margin:0}.muted{color:var(--muted)}
+button,select,input{font:inherit}.btn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:11px 17px;cursor:pointer}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}.login{max-width:430px;margin:15vh auto;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:28px}
+.login input{width:100%;padding:13px;border:1px solid var(--line);border-radius:10px;background:transparent;margin:10px 0 14px}
+.row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px}.stat{padding:20px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+.stat strong{display:block;font-size:28px}.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px;margin:14px 0}
+.meta{display:flex;justify-content:space-between;gap:15px;align-items:start}.name{font-size:20px}.service{color:var(--accent);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.brief{white-space:pre-wrap;margin:18px 0;color:var(--muted);line-height:1.7}.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.status{border:1px solid var(--line);border-radius:999px;padding:8px 12px;background:transparent}
+@media(max-width:700px){main{width:min(100% - 24px,1120px);margin:24px auto}.top{align-items:start}.row{grid-template-columns:1fr}h1{font-size:34px}.meta{flex-direction:column}}
+</style>
+</head>
+<body>
+<main>
+<section id="login" class="login">
+<p class="service">Private studio dashboard</p>
+<h1>Enquiries</h1>
+<p class="muted">Sign in to view website enquiries.</p>
+<form id="loginForm">
+<label for="password">Admin password</label>
+<input id="password" type="password" autocomplete="current-password" required>
+<button class="btn primary" type="submit">Sign in</button>
+<p id="loginError" class="muted"></p>
+</form>
+</section>
+<section id="app" hidden>
+<div class="top"><div><p class="service">Made by Kirat</p><h1>Enquiries</h1><p class="muted">Website project enquiries</p></div><button class="btn" id="logout">Log out</button></div>
+<div class="row"><div class="stat"><span class="muted">Total</span><strong id="total">0</strong></div><div class="stat"><span class="muted">New</span><strong id="newCount">0</strong></div><div class="stat"><span class="muted">Replied</span><strong id="replied">0</strong></div></div>
+<div id="list"></div>
+</section>
+</main>
+<script>
+const $=s=>document.querySelector(s),login=$('#login'),app=$('#app');
+async function api(url,opts={}){const r=await fetch(url,{...opts,headers:{'Content-Type':'application/json',...(opts.headers||{})}});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.message||'Request failed');return d}
+async function load(){try{const d=await api('/api/admin/submissions');login.hidden=true;app.hidden=false;render(d.data)}catch(e){login.hidden=false;app.hidden=true}}
+function render(items){$('#total').textContent=items.length;$('#newCount').textContent=items.filter(x=>x.status==='new').length;$('#replied').textContent=items.filter(x=>x.status==='replied').length;$('#list').innerHTML=items.length?items.map(x=>`<article class="card"><div class="meta"><div><div class="name">${esc(x.name)}</div><div class="service">${esc(x.service)}</div><div class="muted">${esc(x.email)} · ${new Date(x.created_at).toLocaleString()}</div></div><select class="status" data-id="${x.id}"><option ${x.status==='new'?'selected':''}>new</option><option ${x.status==='read'?'selected':''}>read</option><option ${x.status==='replied'?'selected':''}>replied</option><option ${x.status==='archived'?'selected':''}>archived</option></select></div><div class="brief">${esc(x.brief)}</div><div class="actions"><a class="btn primary" href="mailto:${esc(x.email)}?subject=${encodeURIComponent('Re: Your Made by Kirat enquiry')}">Reply by email</a><span class="muted">ID ${esc(x.id)}</span></div></article>`).join(''):'<p class="muted">No enquiries yet.</p>';document.querySelectorAll('.status').forEach(s=>s.addEventListener('change',async()=>{await api('/api/admin/submissions/'+s.dataset.id,{method:'PATCH',body:JSON.stringify({status:s.value})});load()}))}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+$('#loginForm').addEventListener('submit',async e=>{e.preventDefault();$('#loginError').textContent='';try{await api('/api/admin/login',{method:'POST',body:JSON.stringify({password:$('#password').value})});$('#password').value='';load()}catch(err){$('#loginError').textContent=err.message}});
+$('#logout').addEventListener('click',async()=>{await api('/api/admin/logout',{method:'POST'});location.reload()});load();
+</script>
+</body>
+</html>
