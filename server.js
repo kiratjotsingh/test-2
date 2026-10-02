@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import crypto from 'node:crypto';
 import path from 'node:path';
