@@ -290,6 +290,6 @@ app.patch('/api/admin/submissions/:id', requireAdmin, async (req, res) => {
 
 app.get('/api/health', (req, res) => res.json({ ok: true, configured }));
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Made by Kirat contact system running on http://localhost:${PORT}`);
 });
