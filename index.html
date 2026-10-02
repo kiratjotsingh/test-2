@@ -770,10 +770,22 @@
     submitButton.textContent = 'Sending…';
 
     try {
-      const response = await fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
+     const data = new FormData(form);
+
+const response = await fetch('https://contact-api.kiratjotsingh094.workers.dev/api/contact', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  },
+  body: JSON.stringify({
+    name: data.get('name') || '',
+    email: data.get('email') || '',
+    service: data.get('service') || 'Not sure yet',
+    brief: data.get('brief') || '',
+    website: data.get('_honey') || ''
+  })
+});
       });
       const result = await response.json().catch(() => ({}));
       if (!response.ok || result.success === false) throw new Error('Submission failed');
